@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Computing — Full Tutor Notes | Adithya</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1C1B18;
+  --ink-soft: #4A4845;
+  --ink-faint: #7A7874;
+  --paper: #FAF9F5;
+  --paper-warm: #F3F1EB;
+  --paper-card: #FFFFFF;
+  --rule: #E4E2DA;
+  --rule-soft: #EEEDE8;
+
+  --indigo: #3730A3;
+  --indigo-light: #EEF2FF;
+  --indigo-mid: #6366F1;
+  --indigo-border: #C7D2FE;
+
+  --emerald: #065F46;
+  --emerald-light: #ECFDF5;
+  --emerald-mid: #10B981;
+  --emerald-border: #A7F3D0;
+
+  --amber: #78350F;
+  --amber-light: #FFFBEB;
+  --amber-mid: #F59E0B;
+  --amber-border: #FDE68A;
+
+  --rose: #881337;
+  --rose-light: #FFF1F2;
+  --rose-mid: #F43F5E;
+  --rose-border: #FECDD3;
+
+  --sky: #0C4A6E;
+  --sky-light: #F0F9FF;
+  --sky-mid: #0EA5E9;
+  --sky-border: #BAE6FD;
+
+  --violet: #4C1D95;
+  --violet-light: #F5F3FF;
+  --violet-mid: #8B5CF6;
+  --violet-border: #DDD6FE;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+/* ── STICKY NAV ── */
+.main-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(250,249,245,0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 0;
+  height: 52px;
+}
+.nav-brand {
+  font-family: 'Lora', serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--ink);
+  margin-right: 28px;
+  white-space: nowrap;
+}
+.nav-links { display: flex; gap: 2px; flex-wrap: nowrap; overflow-x: auto; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-link {
+  font-size: 12px; font-weight: 500;
+  color: var(--ink-faint);
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.nav-link:hover { background: var(--paper-warm); color: var(--ink); }
+.nav-link.active { background: var(--indigo-light); color: var(--indigo); }
+
+/* ── PAGE LAYOUT ── */
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── HERO ── */
+.hero {
+  padding: 56px 0 48px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 56px;
+}
+.hero-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--indigo-mid);
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700; line-height: 1.2;
+  color: var(--ink); margin-bottom: 16px;
+}
+.hero-title em { font-style: italic; color: var(--indigo-mid); }
+.hero-desc {
+  font-size: 16px; color: var(--ink-soft);
+  max-width: 620px; line-height: 1.7;
+  margin-bottom: 28px;
+}
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.hero-tag {
+  font-size: 12px; font-weight: 500;
+  padding: 4px 12px; border-radius: 20px;
+  background: var(--paper-warm); color: var(--ink-soft);
+  border: 1px solid var(--rule);
+}
+
+/* ── DAY SECTION ── */
+.day-section { margin-bottom: 72px; scroll-margin-top: 60px; }
+
+.day-opener {
+  display: flex; gap: 20px; align-items: flex-start;
+  padding: 28px 32px;
+  background: var(--ink);
+  border-radius: 16px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.day-opener::after {
+  content: '';
+  position: absolute; right: -20px; top: -20px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.day-big-num {
+  font-family: 'Lora', serif;
+  font-size: 64px; font-weight: 700;
+  line-height: 1; color: rgba(255,255,255,0.12);
+  flex-shrink: 0; margin-top: -4px;
+  user-select: none;
+}
+.day-opener-text {}
+.day-num-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+.day-opener-title {
+  font-family: 'Lora', serif;
+  font-size: 22px; font-weight: 700;
+  color: #fff; margin-bottom: 8px; line-height: 1.3;
+}
+.day-opener-sub {
+  font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.5;
+}
+
+/* ── SECTION ── */
+.section { margin-bottom: 40px; }
+.section-heading {
+  font-family: 'Lora', serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--ink); margin-bottom: 6px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--rule);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-heading .sh-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--indigo-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.section-intro {
+  font-size: 15px; color: var(--ink-soft);
+  margin-bottom: 20px; line-height: 1.7;
+}
+
+/* ── TUTOR PROSE ── */
+.tutor-block {
+  font-size: 15px; color: var(--ink-soft);
+  line-height: 1.85; margin-bottom: 20px;
+}
+.tutor-block p { margin-bottom: 14px; }
+.tutor-block p:last-child { margin-bottom: 0; }
+.tutor-block b, .tutor-block strong { color: var(--ink); font-weight: 600; }
+.tutor-block em { font-style: italic; color: var(--ink); }
+.tutor-block .highlight { color: var(--indigo); font-weight: 600; }
+
+/* ── CALLOUT BOXES ── */
+.callout {
+  border-radius: 12px; padding: 18px 20px;
+  margin-bottom: 18px; font-size: 14px; line-height: 1.75;
+}
+.callout b, .callout strong { font-weight: 600; }
+.callout.think { background: var(--indigo-light); border-left: 4px solid var(--indigo-mid); color: var(--indigo); }
+.callout.think b { color: var(--indigo); }
+.callout.remember { background: var(--emerald-light); border-left: 4px solid var(--emerald-mid); color: var(--emerald); }
+.callout.remember b { color: var(--emerald); }
+.callout.warning { background: var(--amber-light); border-left: 4px solid var(--amber-mid); color: var(--amber); }
+.callout.warning b { color: var(--amber); }
+.callout.exam { background: var(--rose-light); border-left: 4px solid var(--rose-mid); color: var(--rose); }
+.callout.exam b { color: var(--rose); }
+.callout.analogy { background: var(--sky-light); border-left: 4px solid var(--sky-mid); color: var(--sky); }
+.callout.analogy b { color: var(--sky); }
+.callout.definition { background: var(--violet-light); border-left: 4px solid var(--violet-mid); color: var(--violet); }
+.callout.definition b { color: var(--violet); }
+
+/* ── CARDS ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.card {
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.card-icon { font-size: 22px; margin-bottom: 10px; }
+.card-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.card-body { font-size: 13px; color: var(--ink-soft); line-height: 1.65; }
+.card-body b { color: var(--ink); font-weight: 600; }
+
+/* ── TIMELINE ── */
+.timeline { margin-bottom: 20px; }
+.tl-item { display: flex; gap: 0; margin-bottom: 0; }
+.tl-left { display: flex; flex-direction: column; align-items: center; width: 80px; flex-shrink: 0; }
+.tl-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--indigo-mid); border: 2px solid var(--paper); box-shadow: 0 0 0 2px var(--indigo-mid); flex-shrink: 0; margin-top: 5px; }
+.tl-line-seg { width: 2px; background: var(--rule); flex: 1; min-height: 20px; }
+.tl-item:last-child .tl-line-seg { display: none; }
+.tl-year-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  color: var(--indigo-mid);
+  margin-right: 10px; margin-top: 2px;
+  text-align: right; width: 60px; flex-shrink: 0;
+}
+.tl-content { padding: 0 0 28px 16px; flex: 1; }
+.tl-content h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.tl-content p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.tl-content p b { color: var(--ink); font-weight: 600; }
+
+/* ── TABLE ── */
+.table-wrap { border-radius: 12px; overflow: hidden; border: 1px solid var(--rule); margin-bottom: 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--paper-warm); color: var(--ink);
+  font-weight: 600; font-size: 12px; letter-spacing: .03em;
+  padding: 12px 14px; text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+tbody td { padding: 11px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink-soft); vertical-align: top; }
+tbody td b { color: var(--ink); font-weight: 600; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: var(--paper-warm); }
+
+/* ── CODE ── */
+.code-block {
+  background: #1E1E2E;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.code-block .comment { color: #6C7086; }
+.code-block .keyword { color: #CBA6F7; }
+.code-block .func { color: #89DCEB; }
+.code-block .string { color: #A6E3A1; }
+.code-block .number { color: #FAB387; }
+.code-block .plain { color: #CDD6F4; }
+.code-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--ink-faint);
+  margin-bottom: 6px; letter-spacing: .04em;
+}
+
+/* ── CRITERIA LIST ── */
+.criteria-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+.criterion {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: 10px; padding: 14px 16px;
+}
+.c-num {
+  width: 30px; height: 30px; flex-shrink: 0;
+  border-radius: 50%; background: var(--indigo);
+  color: #fff; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.c-text { flex: 1; }
+.c-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.c-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.c-desc b { color: var(--ink); font-weight: 600; }
+
+/* ── COMPARE ── */
+.compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+@media(max-width:560px) { .compare-wrap { grid-template-columns: 1fr; } }
+.compare-col { border-radius: 12px; padding: 18px; }
+.compare-col.classic { background: #F8F7F2; border: 1px solid var(--rule); }
+.compare-col.quantum { background: var(--indigo-light); border: 1px solid var(--indigo-border); }
+.compare-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+.compare-col.classic .compare-col-label { color: var(--ink-soft); }
+.compare-col.quantum .compare-col-label { color: var(--indigo); }
+.compare-item { font-size: 13px; color: var(--ink-soft); padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.06); line-height: 1.5; }
+.compare-item:last-child { border-bottom: none; }
+.compare-item b { color: var(--ink); font-weight: 600; }
+
+/* ── QUIZ BOX ── */
+.quiz-section {
+  background: var(--ink);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-top: 32px;
+}
+.quiz-title {
+  font-family: 'Lora', serif;
+  font-size: 16px; font-weight: 700; color: #fff;
+  margin-bottom: 18px;
+  display: flex; align-items: center; gap: 8px;
+}
+.qa-item { margin-bottom: 16px; }
+.qa-q { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); margin-bottom: 5px; }
+.qa-a {
+  font-size: 13px; color: #fff;
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 10px 14px;
+  line-height: 1.5;
+}
+.qa-a b { color: var(--amber-mid); }
+
+/* ── MNEMONIC ── */
+.mnemonic {
+  background: var(--emerald-light);
+  border: 1px solid var(--emerald-border);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 14px; color: var(--emerald);
+  margin-bottom: 16px;
+}
+.mnemonic b { font-weight: 700; color: var(--emerald); }
+
+/* ── DIVIDER ── */
+.day-divider {
+  height: 1px; background: var(--rule);
+  margin: 56px 0;
+  position: relative;
+}
+.day-divider::after {
+  content: '✦';
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--paper); padding: 0 12px;
+  color: var(--rule); font-size: 14px;
+}
+
+/* ── INLINE FORMULA ── */
+.formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  background: var(--paper-warm);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 2px 8px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* ── PRINT ── */
+@media print {
+  .main-nav { display: none; }
+  .day-section { page-break-before: always; }
+  .day-section:first-child { page-break-before: auto; }
+  body { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="main-nav">
+  <span class="nav-brand">QC Tutor Notes</span>
+  <div class="nav-links">
+    <a class="nav-link" href="#day1">Day 1 — Overview</a>
+    <a class="nav-link" href="#day2">Day 2 — Qubits & QM</a>
+    <a class="nav-link" href="#day3">Day 3 — Algorithms</a>
+    <a class="nav-link" href="#day4">Day 4 — HPC & Hardware</a>
+    <a class="nav-link" href="#day5">Day 5 — VQA & Circuits</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+<div class="hero">
+  <div class="hero-label">Adithya · CSE 2026 · CR Reddy College · AP Quantum Program Phase 2 Prep</div>
+  <h1 class="hero-title">Quantum Computing —<br><em>Complete Tutor Notes</em></h1>
+  <p class="hero-desc">These notes are written as if I am sitting next to you, explaining everything from scratch. Every concept has a real-world analogy, every technical term is broken down, and every topic ends with exam questions. Read slowly, one day at a time.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">5 Days</span>
+    <span class="hero-tag">Phase 1 + Phase 2</span>
+    <span class="hero-tag">Offline Exam Ready</span>
+    <span class="hero-tag">No prior knowledge needed</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ DAY 1 ════ -->
+<div class="day-section" id="day1">
+  <div class="day-opener">
+    <div class="day-big-num">01</div>
+    <div class="day-opener-text">
+      <div class="day-num-label">Day One · Phase 1 Module 1</div>
+      <div class="day-opener-title">Why Quantum Computing Exists — The Big Picture</div>
+      <div class="day-opener-sub">History of computing → where classical computers fail → what quantum offers → DiVincenzo's criteria → global landscape → India's quantum mission</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1.1 -->
+  <div class="section" id="s1-1">
+    <h2 class="section-heading"><span class="sh-icon">🏛️</span> The Story Starts With Transistors</h2>
+    <div class="tutor-block">
+      <p>Let me start from the very beginning, because context matters. Imagine it is 1947. The world just survived World War II. Scientists at Bell Labs — a famous research lab in the USA — invented something called the <strong>transistor</strong>. A transistor is a tiny switch. It can be either ON or OFF. That ON and OFF is what we call a <strong>1 and a 0</strong> — the binary system that every computer even today is built on.</p>
+      <p>Now here is the beautiful thing that happened after that invention. In 1965, a scientist named Gordon Moore made an observation that became known as <strong>Moore's Law</strong>: the number of transistors you can fit on a computer chip doubles roughly every two years. And since more transistors = more computing power, this meant computers got twice as powerful, roughly every two years, for about 50 years. That is why the phone in your pocket today is more powerful than the computers NASA used to send humans to the Moon.</p>
+      <p>But here is the problem. <strong>Transistors cannot keep shrinking forever.</strong> Today's transistors are only a few nanometres wide — just a few dozen atoms. When things get that small, the normal rules of physics that we rely on start breaking down. Electrons start "tunnelling" through walls they are not supposed to cross. Bits become unreliable. Heat becomes unmanageable. <strong>Moore's Law is dying.</strong> And with it, the easy path to faster computers is closing.</p>
+    </div>
+    <div class="callout analogy">
+      <b>Analogy to remember this:</b> Think of Moore's Law like a highway that kept adding lanes every two years. More lanes = more cars = more traffic moving. But now the highway has reached the edge of the land — there is no more room to add lanes. We need a completely different kind of road. That different road is quantum computing.
+    </div>
+    <div class="tutor-block">
+      <p>In 1976, <strong>Jack Kilby</strong>'s earlier work on Integrated Circuits (ICs) — putting many transistors on one chip — had already revolutionised electronics. The IC is what made personal computers, mobile phones, and the internet possible. It is mentioned in your syllabus because it represents the peak of classical computing thinking: make things smaller, put more of them on a chip, go faster. This thinking served us brilliantly for 60 years. But it is reaching its physical limit.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 1.2 -->
+  <div class="section" id="s1-2">
+    <h2 class="section-heading"><span class="sh-icon">💡</span> Feynman's Revolutionary Idea — 1982</h2>
+    <div class="tutor-block">
+      <p>Now we jump to 1982. A physicist named <strong>Richard Feynman</strong> — one of the greatest scientific minds of the 20th century — was thinking about a completely different problem. He was frustrated that classical computers were terrible at simulating nature. Here is what he meant.</p>
+      <p>Imagine you want to simulate how a single caffeine molecule behaves — its electrons, their positions, how they interact with each other. A classical computer has to track every electron's state mathematically. The problem is, quantum systems grow <strong>exponentially</strong>. Two particles need 4 numbers to describe them. Four particles need 16 numbers. Ten particles need 1,024 numbers. Sixty particles need more numbers than there are atoms in the observable universe. A classical computer cannot possibly simulate a medium-sized molecule accurately. It would run out of memory before it even started.</p>
+      <p>Feynman's insight was startlingly simple: <strong>"If you want to simulate nature, use nature itself."</strong> Since molecules are quantum systems, use a quantum system to simulate them. A quantum computer, being quantum, would naturally handle quantum behaviour without exponential blowup. This idea — that quantum computers could simulate things classical computers simply cannot — is the founding concept of the entire field.</p>
+    </div>
+    <div class="callout think">
+      <b>Why this matters for your exam:</b> If asked "Who first proposed quantum computing and why?" — the answer is <b>Richard Feynman in 1982</b>, and the reason is <b>to simulate quantum physical systems that are impossible to simulate on classical computers.</b>
+    </div>
+  </div>
+
+  <!-- SECTION 1.3 -->
+  <div class="section" id="s1-3">
+    <h2 class="section-heading"><span class="sh-icon">📅</span> The Timeline — Key Moments in Quantum Computing</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">1947</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Transistor Invented — Bell Labs</h4>
+          <p>The foundation of all classical computing. A tiny electronic switch. ON = 1, OFF = 0. Everything digital is built from billions of these.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">1965</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Moore's Law</h4>
+          <p>Gordon Moore predicted: transistors on a chip double every ~2 years. This drove 50 years of computing progress. Now plateauing.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">1982</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Feynman Proposes Quantum Simulation</h4>
+          <p><b>The founding moment of quantum computing.</b> Feynman argues that only a quantum computer can efficiently simulate quantum systems. Classical computers face exponential blowup doing the same.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">1985</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Deutsch's Quantum Turing Machine</h4>
+          <p>David Deutsch formalised the idea of a universal quantum computer — proved it could do everything a classical computer could, plus more.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">1994</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Shor's Algorithm — The Earthquake</h4>
+          <p><b>Peter Shor</b> proved a quantum computer could crack RSA encryption — the security behind all internet banking and HTTPS. Governments worldwide started funding quantum research immediately. This is when quantum computing became a national security issue.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">1996</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Grover's Algorithm</h4>
+          <p>Lov Grover showed a quantum computer can search an unsorted database quadratically faster — √N steps instead of N. Universally applicable speedup.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">2000</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>DiVincenzo's Criteria Published</h4>
+          <p>David DiVincenzo (IBM) defined the 5 requirements any physical system must meet to work as a quantum computer. Still the standard framework today.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">2019</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Google Claims Quantum Supremacy</h4>
+          <p>Google's <b>Sycamore processor</b> (53 qubits) completed a specific mathematical task in 200 seconds. The best classical supercomputer would need an estimated 10,000 years. First real-world demonstration of quantum advantage — though the specific task was carefully chosen and debated.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year-tag">Now</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>The NISQ Era — Where We Are Today</h4>
+          <p><b>Noisy Intermediate-Scale Quantum.</b> Real quantum computers exist and are accessible via cloud. But they have significant errors (noise) and not enough qubits for large problems. We are in the early stage — like computing in the 1950s when computers filled entire rooms and crashed constantly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1.4 -->
+  <div class="section" id="s1-4">
+    <h2 class="section-heading"><span class="sh-icon">⚖️</span> Classical vs Quantum — What's Actually Different?</h2>
+    <div class="tutor-block">
+      <p>Before we talk about quantum phenomena, let me make sure you understand the fundamental difference between how classical and quantum computers work. This is one of the most commonly tested areas.</p>
+    </div>
+    <div class="compare-wrap">
+      <div class="compare-col classic">
+        <div class="compare-col-label">Classical Computer</div>
+        <div class="compare-item"><b>Unit:</b> Bit — either 0 or 1. Never both.</div>
+        <div class="compare-item"><b>Processing:</b> One state at a time. Sequential or parallel but always definite.</div>
+        <div class="compare-item"><b>Nature:</b> Deterministic — same input always gives same output.</div>
+        <div class="compare-item"><b>Memory scales:</b> Linearly — 10 bits stores 10 values.</div>
+        <div class="compare-item"><b>Best for:</b> Email, gaming, spreadsheets, web browsing, video.</div>
+        <div class="compare-item"><b>Limitation:</b> Exponential problems — molecule simulation, optimisation with billions of variables — are forever out of reach.</div>
+      </div>
+      <div class="compare-col quantum">
+        <div class="compare-col-label">Quantum Computer</div>
+        <div class="compare-item"><b>Unit:</b> Qubit — can be 0, 1, or a superposition of both.</div>
+        <div class="compare-item"><b>Processing:</b> Explores many states simultaneously through superposition.</div>
+        <div class="compare-item"><b>Nature:</b> Probabilistic — measurement gives a probability distribution of results.</div>
+        <div class="compare-item"><b>Memory scales:</b> Exponentially — 10 qubits can represent 2¹⁰ = 1024 states simultaneously.</div>
+        <div class="compare-item"><b>Best for:</b> Cryptography, drug discovery, optimisation, quantum simulation, ML.</div>
+        <div class="compare-item"><b>Limitation:</b> Fragile — noise and decoherence destroy quantum states. Not good for everyday tasks classical computers handle well.</div>
+      </div>
+    </div>
+    <div class="callout warning">
+      <b>Common misconception to avoid in your exam:</b> Quantum computers are NOT just faster classical computers. They are not going to replace your laptop. They solve a completely different category of problems — ones where the number of possibilities is so astronomically large that classical computers can never check them all.
+    </div>
+  </div>
+
+  <!-- SECTION 1.5 — 3 PHENOMENA -->
+  <div class="section" id="s1-5">
+    <h2 class="section-heading"><span class="sh-icon">🌊</span> The 3 Quantum Phenomena — The Heart of Everything</h2>
+    <div class="tutor-block">
+      <p>Everything in quantum computing — every algorithm, every speedup, every advantage — comes from three fundamental quantum mechanical phenomena. These are not tricks or approximations. They are deep properties of nature that classical physics simply does not have. Understand these three things deeply and half your exam is done.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🌀</div>
+        <div class="card-title">1. Superposition</div>
+        <div class="card-body">A qubit can exist as 0 AND 1 at the same time — until it is measured. This is not a metaphor. It is a physical reality. The qubit is literally in both states simultaneously, with some probability of being found as 0 and some probability of being 1. <b>Only measurement forces it to choose.</b></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <div class="card-title">2. Entanglement</div>
+        <div class="card-body">Two qubits can be "entangled" — linked in a way that knowing the state of one instantly tells you the state of the other, <b>no matter how far apart they are.</b> Einstein hated this and called it "spooky action at a distance." But experiments have confirmed it is real. Used in quantum teleportation and secure communication.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">〰️</div>
+        <div class="card-title">3. Interference</div>
+        <div class="card-body">Quantum states have phases, like waves. Correct answers can be made to <b>constructively interfere</b> (amplified) while wrong answers <b>destructively interfere</b> (cancelled), like noise-cancelling headphones. This is how quantum algorithms selectively amplify the right answer out of a sea of possibilities.</div>
+      </div>
+    </div>
+
+    <div class="tutor-block">
+      <p>Let me expand on each with analogies because these concepts are not intuitive at all.</p>
+    </div>
+
+    <div class="callout analogy">
+      <b>Superposition analogy:</b> Imagine spinning a coin on a table. While it is spinning, it is neither heads nor tails — it is a combination of both. Only when you <em>catch</em> it (measure it) does it become definitively one or the other. A qubit in superposition is exactly like that spinning coin. The difference: a quantum computer can work with the spinning coin before it lands, exploring both possibilities at once.
+    </div>
+
+    <div class="callout analogy">
+      <b>Entanglement analogy:</b> Imagine you have a pair of magic gloves. You take one glove to Hyderabad and send the other to New York without looking at either. The moment you open the box in Hyderabad and see "left glove," you instantly know the one in New York is the "right glove" — without any communication. Entanglement is like this but at the quantum level, and the "gloves" don't have a definite value until you look. The correlation is perfect and instantaneous, but cannot be used to send information faster than light.
+    </div>
+
+    <div class="callout analogy">
+      <b>Interference analogy:</b> Think about noise-cancelling headphones. They generate a sound wave that is the exact opposite of the background noise. When the two waves meet, they cancel each other out — destructive interference. Quantum algorithms use the same wave-like mathematics. Wrong answers get cancelled by destructive interference; the correct answer gets amplified by constructive interference. This is why the right answer "pops out" at the end of a quantum computation.
+    </div>
+  </div>
+
+  <!-- SECTION 1.6 — DiVincenzo -->
+  <div class="section" id="s1-6">
+    <h2 class="section-heading"><span class="sh-icon">📋</span> DiVincenzo's 5 Criteria — What Makes a Real Quantum Computer?</h2>
+    <div class="tutor-block">
+      <p>In 2000, <strong>David DiVincenzo</strong> at IBM published a landmark paper defining exactly what any physical system must be able to do in order to function as a quantum computer. These 5 criteria are now the universal checklist. Every quantum hardware company — IBM, Google, IonQ — is evaluated against these criteria. This is <strong>extremely likely to appear in your exam</strong> either as an MCQ or a list question.</p>
+    </div>
+
+    <div class="criteria-list">
+      <div class="criterion">
+        <div class="c-num">1</div>
+        <div class="c-text">
+          <div class="c-title">Scalable physical qubits</div>
+          <div class="c-desc">You need a physical system where you can define individual qubits, and where you can add more qubits as needed. You cannot build a useful quantum computer with just 5 qubits — you need thousands or millions for real problems. The system must be scalable. Today, IBM has over 1000-qubit chips but making them reliable is the challenge. <b>Scalability is the hardest unsolved problem in quantum hardware right now.</b></div>
+        </div>
+      </div>
+      <div class="criterion">
+        <div class="c-num">2</div>
+        <div class="c-text">
+          <div class="c-title">Initialisation to a known state</div>
+          <div class="c-desc">Before every computation, you must be able to reset all qubits to a known, simple starting state — typically <span class="formula">|0⟩</span>. Think of it like clearing a whiteboard before writing. If the whiteboard already has random scribbles, you cannot reliably write new information on it. Quantum computers must start from a clean slate. This is done using special cooling procedures and microwave pulses depending on the hardware type.</div>
+        </div>
+      </div>
+      <div class="criterion">
+        <div class="c-num">3</div>
+        <div class="c-text">
+          <div class="c-title">Long coherence times relative to gate times</div>
+          <div class="c-desc">A qubit must stay "quantum" (maintain its superposition and entanglement) long enough to complete all the gate operations in a computation. <b>Decoherence</b> is the enemy — it is the process by which a qubit loses its quantum properties due to environmental noise (heat, vibrations, electromagnetic fields). The coherence time must be much longer than the time needed to apply gates. Today's best superconducting qubits have coherence times of hundreds of microseconds — which sounds short but is actually thousands of gate operations long.</div>
+        </div>
+      </div>
+      <div class="criterion">
+        <div class="c-num">4</div>
+        <div class="c-text">
+          <div class="c-title">Universal set of quantum gates</div>
+          <div class="c-desc">A universal set of operations that can implement any quantum computation. In classical computing, any boolean function can be built from NAND gates alone. In quantum computing, you need a small set of gates — typically Hadamard (H), Phase (S), T gate, and CNOT — that together can implement any quantum algorithm. <b>"Universal" means you are not limited — any possible quantum computation can be built from these building blocks.</b></div>
+        </div>
+      </div>
+      <div class="criterion">
+        <div class="c-num">5</div>
+        <div class="c-text">
+          <div class="c-title">Qubit-specific measurement capability</div>
+          <div class="c-desc">You must be able to measure individual qubits at the end of a computation to read out the result. Crucially, you should be able to measure one qubit without disturbing its neighbours. This is harder than it sounds — quantum systems are so delicate that even looking at them changes them. High-fidelity measurement (measuring correctly more than 99% of the time) is a major engineering challenge.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mnemonic">
+      <b>Memory trick — "SILUM":</b> <b>S</b>calable qubits · <b>I</b>nitialisation · <b>L</b>ong coherence · <b>U</b>niversal gates · <b>M</b>easurement. Say it 5 times: SILUM, SILUM, SILUM, SILUM, SILUM.
+    </div>
+
+    <div class="callout remember">
+      <b>DiVincenzo also added 2 bonus criteria for quantum communication</b> (not always tested but good to know): 6) Ability to interconvert stationary and flying qubits (convert between stored and transmitted qubits), and 7) Ability to faithfully transmit flying qubits between locations. These are relevant to the quantum internet topics in Module 2.
+    </div>
+  </div>
+
+  <!-- SECTION 1.7 — India -->
+  <div class="section" id="s1-7">
+    <h2 class="section-heading"><span class="sh-icon">🇮🇳</span> India's Quantum Mission — Your Context</h2>
+    <div class="tutor-block">
+      <p>This is important for your subjective answers. India launched the <strong>National Quantum Mission (NQM)</strong> in April 2023 with a budget of <strong>₹6,003 crore</strong> over 8 years (2023–2031). The mission aims to develop quantum computers with 50–1000 qubits, satellite-based quantum communication networks, quantum sensing, and quantum cryptography. India wants to be among the top 8 nations in quantum technology globally.</p>
+      <p>Andhra Pradesh specifically is building a <strong>Quantum Valley in Amaravati</strong> — modelling itself after Silicon Valley but for quantum technology. The program you enrolled in (WISER) is directly part of this initiative. AP is trying to build a quantum-ready workforce before the technology fully matures, so that when large quantum computers arrive in 5–10 years, AP has trained engineers ready to work with them. <strong>You are literally part of India's national quantum strategy.</strong></p>
+    </div>
+    <div class="callout exam">
+      <b>Use this in subjective answers:</b> "India's National Quantum Mission allocates ₹6,003 crore to develop quantum computing infrastructure. Andhra Pradesh's Quantum Valley initiative in Amaravati aims to build a quantum-ready workforce and attract quantum technology companies. Programs like WISER are building the human capital needed for this transformation."
+    </div>
+  </div>
+
+  <!-- QUIZ DAY 1 -->
+  <div class="quiz-section">
+    <div class="quiz-title">🎯 Day 1 — Exam Practice Questions</div>
+    <div class="qa-item">
+      <div class="qa-q">Q1: Who proposed that quantum systems should be used to simulate nature and in what year?</div>
+      <div class="qa-a"><b>Richard Feynman in 1982.</b> He argued classical computers face exponential blowup when simulating quantum systems, so a quantum computer — being quantum itself — would be naturally efficient at this task.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q2: What is Moore's Law and why is it relevant to quantum computing?</div>
+      <div class="qa-a"><b>Moore's Law:</b> transistors on a chip double every ~2 years, leading to exponential growth in computing power. It is relevant because it is now reaching physical limits — transistors cannot shrink further without quantum effects causing errors. This creates the need for fundamentally new computing paradigms like quantum computing.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q3: List all 5 DiVincenzo criteria.</div>
+      <div class="qa-a">1. <b>Scalable qubits</b> — expandable physical qubit system. 2. <b>Initialisation</b> — reset to known state (|0⟩) before computation. 3. <b>Long coherence times</b> — stay quantum longer than gate operation time. 4. <b>Universal gate set</b> — can implement any quantum computation. 5. <b>Measurement</b> — reliably read individual qubit results. Mnemonic: <b>SILUM</b></div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q4: What is the difference between superposition and entanglement?</div>
+      <div class="qa-a"><b>Superposition</b> is a property of a single qubit — it can be in a combination of 0 and 1 simultaneously. <b>Entanglement</b> is a property between two or more qubits — they are correlated such that measuring one instantly determines the state of the other regardless of distance.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q5: What is the NISQ era and what does it mean for current quantum computers?</div>
+      <div class="qa-a"><b>NISQ = Noisy Intermediate-Scale Quantum.</b> Current quantum computers have 50–1000+ qubits but suffer from significant noise (errors) in each gate operation. They are too error-prone for large fault-tolerant computations but capable enough to demonstrate quantum advantages on specific tasks. It is the "early days" era of quantum computing.</div>
+    </div>
+  </div>
+</div>
+
+<div class="day-divider"></div>
+
+<!-- ════════════════════════════════════════════ DAY 2 ════ -->
+<div class="day-section" id="day2">
+  <div class="day-opener">
+    <div class="day-big-num">02</div>
+    <div class="day-opener-text">
+      <div class="day-num-label">Day Two · Phase 1 Module 1 + Phase 2 Intro</div>
+      <div class="day-opener-title">Qubits, Quantum Gates & Visualising Quantum Mechanics</div>
+      <div class="day-opener-sub">What is a qubit physically · Dirac notation · Bloch sphere · All gates explained · Schrödinger · Wave functions · Measurement · No-cloning theorem</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2.1 -->
+  <div class="section" id="s2-1">
+    <h2 class="section-heading"><span class="sh-icon">⚛️</span> What Exactly IS a Qubit?</h2>
+    <div class="tutor-block">
+      <p>Yesterday you learned that a qubit can be 0 and 1 at the same time. Today let's go deeper — what is a qubit physically? How does it exist in the real world?</p>
+      <p>A qubit is any quantum two-level system — something that can be in one of two quantum states, which we call <span class="formula">|0⟩</span> and <span class="formula">|1⟩</span>. The physical implementation varies by company, but the quantum mathematics is identical. Here are the main types:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Qubit type</th><th>How it works</th><th>Company</th><th>Key advantage</th><th>Key challenge</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Superconducting</b></td><td>Tiny superconducting loop acts as artificial atom. |0⟩ and |1⟩ are different energy levels. Controlled by microwave pulses.</td><td>IBM, Google</td><td>Fast gates (~ns), integrates with existing chip manufacturing</td><td>Needs cooling to -273°C (near absolute zero), short coherence time</td></tr>
+          <tr><td><b>Trapped ion</b></td><td>Individual atoms (usually Ytterbium or Barium) suspended in vacuum by electromagnetic fields. |0⟩ and |1⟩ are electron energy levels.</td><td>IonQ, Quantinuum</td><td>Very high fidelity (99.9%+), long coherence time</td><td>Slow gates (~μs), hard to scale to many ions</td></tr>
+          <tr><td><b>Photonic</b></td><td>Single photons of light. |0⟩ and |1⟩ encoded in polarisation or path.</td><td>PsiQuantum, Xanadu</td><td>Can work near room temperature, natural for networking</td><td>Photon loss is very hard to control, deterministic 2-qubit gates are difficult</td></tr>
+          <tr><td><b>Neutral atom</b></td><td>Neutral atoms (like Rubidium) held in place by laser tweezers in programmable arrays.</td><td>QuEra, Pasqal, Atom Computing</td><td>Easily scalable to 1000+ qubits in 2D arrays, programmable connectivity</td><td>Gate speeds moderate, laser control complexity</td></tr>
+          <tr><td><b>Topological</b></td><td>Theoretical — uses exotic quasiparticles called Majorana fermions. Inherently protected from noise by topology.</td><td>Microsoft</td><td>Potentially fault-tolerant by design</td><td>Not yet demonstrated reliably in physical hardware</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout think">
+      <b>For your exam:</b> You don't need to know the deep physics of each type. Know the company-to-type mapping and one key property for each. Most commonly tested: IBM = superconducting, IonQ = trapped ion, needs cooling for superconducting, long coherence for trapped ion.
+    </div>
+  </div>
+
+  <!-- SECTION 2.2 — Math -->
+  <div class="section" id="s2-2">
+    <h2 class="section-heading"><span class="sh-icon">📐</span> The Language of Qubits — Dirac Notation</h2>
+    <div class="tutor-block">
+      <p>Quantum mechanics has its own notation called <strong>Dirac notation</strong> or <strong>bra-ket notation</strong>, invented by physicist Paul Dirac. It looks scary at first but it is just a clean way of writing quantum states. You do not need to do the math — just understand what the symbols mean.</p>
+    </div>
+
+    <div class="callout definition">
+      <b>Ket notation:</b> A quantum state is written as <b>|ψ⟩</b> (read: "ket psi"). The vertical bar and angle bracket together form the "ket." So |0⟩ means "qubit in state 0" and |1⟩ means "qubit in state 1."
+    </div>
+
+    <div class="tutor-block">
+      <p>A general qubit state in superposition is written as:</p>
+    </div>
+    <div class="code-block">
+      <span class="plain">|ψ⟩ = α|0⟩ + β|1⟩</span><br><br>
+      <span class="comment">Where:</span><br>
+      <span class="plain">α = amplitude for state 0 (a complex number)</span><br>
+      <span class="plain">β = amplitude for state 1 (a complex number)</span><br><br>
+      <span class="comment">The rule — probabilities must add to 100%:</span><br>
+      <span class="plain">|α|² + |β|² = 1</span><br><br>
+      <span class="comment">When you MEASURE this qubit:</span><br>
+      <span class="plain">Probability of getting 0 = |α|²</span><br>
+      <span class="plain">Probability of getting 1 = |β|²</span>
+    </div>
+    <div class="callout analogy">
+      <b>Example:</b> If α = β = 1/√2, then |α|² = 0.5 and |β|² = 0.5. So the qubit has exactly 50% chance of being measured as 0 and 50% as 1. This is called <b>equal superposition</b> — the quantum equivalent of a perfectly fair coin. The Hadamard gate creates this exact state from |0⟩.
+    </div>
+    <div class="tutor-block">
+      <p>Two important "basis states" (pure, non-superposition states) are:</p>
+    </div>
+    <div class="code-block">
+      <span class="plain">|0⟩ = 1·|0⟩ + 0·|1⟩   </span><span class="comment">→ 100% chance of measuring 0. α=1, β=0</span><br>
+      <span class="plain">|1⟩ = 0·|0⟩ + 1·|1⟩   </span><span class="comment">→ 100% chance of measuring 1. α=0, β=1</span>
+    </div>
+  </div>
+
+  <!-- SECTION 2.3 — Bloch Sphere -->
+  <div class="section" id="s2-3">
+    <h2 class="section-heading"><span class="sh-icon">🌐</span> The Bloch Sphere — Seeing a Qubit</h2>
+    <div class="tutor-block">
+      <p>A classical bit lives on a number line with only two points: 0 and 1. A qubit lives on the <strong>surface of a sphere</strong> — the Bloch sphere. Every point on the surface of this sphere represents a valid quantum state. This is a powerful visual tool.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">⬆️</div>
+        <div class="card-title">North Pole = |0⟩</div>
+        <div class="card-body">The "ground state" or computational zero. When you initialise a qubit before computation, you put it at the north pole.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⬇️</div>
+        <div class="card-title">South Pole = |1⟩</div>
+        <div class="card-body">The excited state or computational one. The Pauli-X gate flips a qubit from north to south pole — like a classical NOT gate.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">➡️</div>
+        <div class="card-title">Equator = Equal Superposition</div>
+        <div class="card-body">Any point on the equator represents 50/50 superposition — measuring gives 0 or 1 with equal probability. The Hadamard gate moves a qubit from north pole to the equator.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Gates = Rotations</div>
+        <div class="card-body">Every quantum gate is simply a rotation of the Bloch sphere. H gate rotates from pole to equator. X gate rotates 180° around X-axis. Z gate rotates 180° around Z-axis.</div>
+      </div>
+    </div>
+    <div class="callout think">
+      <b>Key insight for your exam:</b> The Bloch sphere gives a qubit an <b>infinite</b> number of possible states (every point on the sphere's surface). But when you <b>measure</b> it, it collapses to just one of two points — north (0) or south (1). The measurement throws away all the rich quantum information and leaves you with just a classical bit. That is why you run quantum circuits many times — to reconstruct the probability distribution.
+    </div>
+  </div>
+
+  <!-- SECTION 2.4 — Gates -->
+  <div class="section" id="s2-4">
+    <h2 class="section-heading"><span class="sh-icon">🚪</span> Quantum Gates — Every Single One You Need to Know</h2>
+    <div class="tutor-block">
+      <p>Quantum gates are the operations that manipulate qubits. They are the quantum equivalent of classical logic gates (AND, OR, NOT). There is one crucial difference from classical gates: <strong>all quantum gates are reversible.</strong> You can always undo a quantum gate. Classical AND gate is not reversible (knowing the output 0 doesn't tell you if inputs were 00, 01, or 10). This reversibility is a deep consequence of quantum mechanics and connects to energy efficiency in computation.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Gate</th><th>Symbol</th><th>Acts on</th><th>What it does</th><th>Bloch sphere effect</th><th>Exam importance</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Pauli-X (NOT)</b></td><td><span class="formula">X</span></td><td>1 qubit</td>
+            <td>Flips |0⟩↔|1⟩. The quantum NOT gate. If given α|0⟩+β|1⟩, it outputs β|0⟩+α|1⟩ — swaps the amplitudes.</td>
+            <td>180° rotation around X-axis</td><td>⭐⭐⭐ Very high</td>
+          </tr>
+          <tr>
+            <td><b>Pauli-Y</b></td><td><span class="formula">Y</span></td><td>1 qubit</td>
+            <td>Flips and adds a phase. |0⟩→i|1⟩ and |1⟩→-i|0⟩. Used in error correction.</td>
+            <td>180° rotation around Y-axis</td><td>⭐⭐ Medium</td>
+          </tr>
+          <tr>
+            <td><b>Pauli-Z</b></td><td><span class="formula">Z</span></td><td>1 qubit</td>
+            <td>Phase flip. Leaves |0⟩ alone, but flips the phase of |1⟩ to -|1⟩. Does not change measurement probabilities but affects interference.</td>
+            <td>180° rotation around Z-axis</td><td>⭐⭐⭐ High</td>
+          </tr>
+          <tr>
+            <td><b>Hadamard</b></td><td><span class="formula">H</span></td><td>1 qubit</td>
+            <td>Creates equal superposition. |0⟩→(|0⟩+|1⟩)/√2 and |1⟩→(|0⟩-|1⟩)/√2. The most important single-qubit gate — starts almost every quantum algorithm.</td>
+            <td>Pole → Equator rotation (45° diagonal)</td><td>⭐⭐⭐ Critical</td>
+          </tr>
+          <tr>
+            <td><b>S gate (Phase)</b></td><td><span class="formula">S</span></td><td>1 qubit</td>
+            <td>Multiplies |1⟩ amplitude by i (90° phase). Part of the universal gate set with H and T.</td>
+            <td>90° rotation around Z-axis</td><td>⭐ Low</td>
+          </tr>
+          <tr>
+            <td><b>T gate (π/8)</b></td><td><span class="formula">T</span></td><td>1 qubit</td>
+            <td>45° phase rotation of |1⟩. Together with H and CNOT, forms a universal gate set — can implement any quantum computation.</td>
+            <td>45° rotation around Z-axis</td><td>⭐⭐ Medium</td>
+          </tr>
+          <tr>
+            <td><b>CNOT (CX)</b></td><td><span class="formula">CX</span></td><td>2 qubits</td>
+            <td><b>THE most important 2-qubit gate.</b> Has a control qubit and a target qubit. If control = |1⟩, flip target. If control = |0⟩, do nothing. Creates entanglement when combined with H gate.</td>
+            <td>Entangles two qubits</td><td>⭐⭐⭐ Critical</td>
+          </tr>
+          <tr>
+            <td><b>Toffoli (CCX)</b></td><td><span class="formula">CCX</span></td><td>3 qubits</td>
+            <td>Like CNOT but with two control qubits. Flips target only if BOTH controls are |1⟩. Used to simulate classical logic inside quantum circuits.</td>
+            <td>3-qubit operation</td><td>⭐⭐ Medium</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tutor-block">
+      <p>Let me explain the CNOT gate in extra detail because it is the gate that creates entanglement — the most powerful quantum resource.</p>
+    </div>
+    <div class="callout definition">
+      <b>CNOT gate truth table — memorise this:</b><br><br>
+      Control=0, Target=0 → Output: 00 (nothing changes)<br>
+      Control=0, Target=1 → Output: 01 (nothing changes)<br>
+      Control=1, Target=0 → Output: 11 (target flipped)<br>
+      Control=1, Target=1 → Output: 10 (target flipped)<br><br>
+      <b>Rule: If control is |1⟩, flip target. If control is |0⟩, leave target alone.</b>
+    </div>
+
+    <div class="tutor-block">
+      <p>Now here is the magical part. What happens when you apply Hadamard first, then CNOT? Let's trace through it step by step:</p>
+    </div>
+    <div class="code-block">
+      <span class="comment">Creating a Bell state (entangled pair) — step by step:</span><br><br>
+      <span class="plain">Start: |00⟩  </span><span class="comment">(both qubits are 0)</span><br><br>
+      <span class="plain">Step 1: Apply H to qubit 0:</span><br>
+      <span class="plain">  |00⟩ → (|0⟩+|1⟩)/√2 ⊗ |0⟩ = (|00⟩+|10⟩)/√2</span><br>
+      <span class="comment">  Now qubit 0 is in superposition, qubit 1 is still |0⟩</span><br><br>
+      <span class="plain">Step 2: Apply CNOT (qubit 0 = control, qubit 1 = target):</span><br>
+      <span class="plain">  |00⟩ → |00⟩  </span><span class="comment">(control=0, target unchanged)</span><br>
+      <span class="plain">  |10⟩ → |11⟩  </span><span class="comment">(control=1, target flipped)</span><br><br>
+      <span class="plain">Result: (|00⟩+|11⟩)/√2</span><br><br>
+      <span class="comment">This is a BELL STATE — perfectly entangled!</span><br>
+      <span class="comment">Measure qubit 0 → 0: qubit 1 is guaranteed to be 0</span><br>
+      <span class="comment">Measure qubit 0 → 1: qubit 1 is guaranteed to be 1</span>
+    </div>
+  </div>
+
+  <!-- SECTION 2.5 — Wave functions -->
+  <div class="section" id="s2-5">
+    <h2 class="section-heading"><span class="sh-icon">🌊</span> Wave Functions & Schrödinger — Visualizing Quantum Mechanics</h2>
+    <div class="tutor-block">
+      <p>This section covers the Module 1 topic "Visualizing Quantum Mechanics" — understanding how quantum particles actually behave at the mathematical level. Do not panic — you just need to understand the ideas, not solve the equations.</p>
+      <p>In classical physics, if you know a ball's position and velocity, you can predict exactly where it will be at any future time using Newton's laws. Quantum mechanics is radically different. <strong>You can never know exactly where a quantum particle is.</strong> Instead, you only know the probability of finding it at different locations. This probability distribution is described by a mathematical object called the <strong>wave function</strong>.</p>
+    </div>
+    <div class="callout definition">
+      <b>Wave function (ψ):</b> A mathematical description of a quantum particle's state. It is not a real, physical wave you can see — it is a probability amplitude function. The square of the wave function, |ψ(x)|², gives the probability density of finding the particle at position x. The wave function contains all information about a quantum system — its position probabilities, momentum probabilities, energy levels, everything.
+    </div>
+    <div class="tutor-block">
+      <p>In 1926, Erwin <strong>Schrödinger</strong> wrote the equation that describes how a quantum system's wave function evolves over time. It is the quantum version of Newton's second law F=ma. You do not need to know the equation — just know this:</p>
+      <ul style="margin: 12px 0 12px 20px; font-size:14px; color: var(--ink-soft); line-height:1.8;">
+        <li>The Schrödinger equation tells us how qubits evolve during computation (before measurement)</li>
+        <li>Quantum gates are mathematical operations that solve the Schrödinger equation for specific time periods</li>
+        <li>The evolution is perfectly predictable and reversible — until measurement happens</li>
+        <li>Measurement is where the randomness comes in — the wave function "collapses" to one outcome</li>
+      </ul>
+    </div>
+    <div class="callout analogy">
+      <b>The Schrödinger's Cat thought experiment:</b> Schrödinger proposed this to illustrate the strangeness of quantum mechanics. A cat is sealed in a box with a radioactive atom that has a 50% chance of decaying in one hour. If it decays, it triggers a mechanism that releases poison and kills the cat. According to quantum mechanics, before you open the box, the atom is in superposition — both decayed AND not decayed. This means the cat is simultaneously alive AND dead. Only opening the box (measuring) forces the system to choose. <b>Key lesson: superposition is not just for small particles — in principle it applies to everything quantum, but larger objects decohere so fast we never observe their superposition.</b>
+    </div>
+  </div>
+
+  <!-- SECTION 2.6 — Measurement -->
+  <div class="section" id="s2-6">
+    <h2 class="section-heading"><span class="sh-icon">📏</span> Quantum Measurement & the No-Cloning Theorem</h2>
+    <div class="tutor-block">
+      <p>Measurement in quantum computing is not like checking a speedometer. It is a fundamentally disruptive act. Here is what happens step by step when you measure a qubit:</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">1️⃣</div>
+        <div class="card-title">Wave function collapse</div>
+        <div class="card-body">The qubit is in superposition α|0⟩+β|1⟩. The moment you measure it, the superposition collapses instantly to either |0⟩ or |1⟩. You cannot measure "halfway."</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">2️⃣</div>
+        <div class="card-title">Probabilistic outcome</div>
+        <div class="card-body">Which result you get is random — 0 with probability |α|² and 1 with probability |β|². You cannot predict the single outcome — only its probability.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">3️⃣</div>
+        <div class="card-title">Irreversible destruction</div>
+        <div class="card-body">After measurement, the superposition is gone. The qubit is now a definite classical bit. You cannot un-measure it. The quantum information in the superposition is permanently lost.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">4️⃣</div>
+        <div class="card-title">Statistical repetition</div>
+        <div class="card-body">Because each measurement gives only one bit of information, quantum algorithms are run hundreds or thousands of times (called "shots"). The frequency of 0s and 1s reveals the underlying probability distribution.</div>
+      </div>
+    </div>
+
+    <div class="callout definition">
+      <b>The No-Cloning Theorem:</b> It is <em>impossible</em> to create a perfect copy of an unknown quantum state. Mathematically proven — not just a practical limitation. This has profound consequences:<br><br>
+      1. You cannot copy qubit data the way you copy a file on a computer<br>
+      2. Quantum information cannot be "amplified" the way classical signals can<br>
+      3. This is actually a security feature — any eavesdropper trying to copy quantum communication will disturb it and be detected (basis of Quantum Key Distribution)<br>
+      4. Quantum error correction must work around this — it cannot make copies, so it uses clever encoding instead
+    </div>
+    <div class="callout warning">
+      <b>Heisenberg's Uncertainty Principle</b> (related concept): You cannot simultaneously know both the exact position and exact momentum of a quantum particle. The more precisely you measure one, the less precisely you can know the other. This is not a limitation of instruments — it is a fundamental property of nature. In qubits, measuring in one "basis" destroys information about another basis.
+    </div>
+  </div>
+
+  <!-- QUIZ DAY 2 -->
+  <div class="quiz-section">
+    <div class="quiz-title">🎯 Day 2 — Exam Practice Questions</div>
+    <div class="qa-item">
+      <div class="qa-q">Q1: What is a qubit and how does it differ from a classical bit?</div>
+      <div class="qa-a">A classical bit is either exactly 0 or exactly 1. A <b>qubit</b> is a quantum two-level system that can be in a superposition of both 0 and 1 simultaneously, described by the state α|0⟩+β|1⟩ where |α|²+|β|²=1. Only measurement forces it to a definite value.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q2: What does the Hadamard gate do and what state does it produce from |0⟩?</div>
+      <div class="qa-a">The <b>Hadamard gate</b> creates an equal superposition. Applied to |0⟩, it produces (|0⟩+|1⟩)/√2 — a state with 50% probability of measuring 0 and 50% probability of measuring 1. On the Bloch sphere, it moves a qubit from the north pole to the equator.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q3: How do you create a Bell state? Why is it significant?</div>
+      <div class="qa-a">Apply <b>Hadamard to qubit 0</b>, then apply <b>CNOT with qubit 0 as control and qubit 1 as target</b>. Result: (|00⟩+|11⟩)/√2. Significant because the two qubits are <b>maximally entangled</b> — measuring one instantly determines the other regardless of distance.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q4: What is the no-cloning theorem and why does it matter?</div>
+      <div class="qa-a">The <b>no-cloning theorem</b> states that an unknown quantum state cannot be perfectly copied. This means: quantum information cannot be amplified like classical signals, eavesdropping on quantum communication is detectable (QKD security), and error correction must use encoding rather than copying.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q5: What happens physically when you measure a qubit in superposition?</div>
+      <div class="qa-a">The superposition <b>collapses</b> — the qubit irreversibly becomes either |0⟩ or |1⟩ with probabilities |α|² and |β|² respectively. The act of measurement destroys all quantum information in the superposition. This is why quantum algorithms are run many times (shots) to reconstruct probability distributions.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
